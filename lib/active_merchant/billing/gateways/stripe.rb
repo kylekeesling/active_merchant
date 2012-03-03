@@ -64,8 +64,9 @@ module ActiveMerchant #:nodoc:
       def refund(money, identification, options = {})
         post = {}
 
-        post[:amount] = amount(money) if money
-
+        add_amount(post, money, options)
+        add_customer_data(post, options)
+        
         commit("charges/#{CGI.escape(identification)}/refund", post)
       end
 
